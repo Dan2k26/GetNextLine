@@ -1,8 +1,8 @@
 NAME = get_line.a
 
-NUM = 42
+NUM = 1
 
-SRC = prueba.c
+SRC = get_next_line.c get_next_line_utils.c main.c
 		
 OBJS = $(SRC:.c=.o)
 
@@ -12,18 +12,21 @@ $(NAME): $(OBJS)
 	@ar r $(NAME) $(OBJS)
 	@echo "\033[1;105mWork compile\033[0m"
 
-%.o : %.c
+%.o : %.c ./get_next_line.h
 	@gcc $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
 run: all
-	@tput setaf 153; echo "MAKEFLE DE GET_LINE"
-	@gcc get_line.a -g3 -o a.out  
-	./a.out
+	@tput setaf 214; echo "MAKEFLE DE GET_NEXT_LINE"
+	@gcc $(CFLAGS) $(NAME) -g3 -o a.out  
+	./a.out |cat -e
 
+debug: all
+	@gcc $(CFLAGS) $(SRC) -g3 -o a.out
+	@tput setaf 214; echo "DEBUG"
 normi:
-	norminette $(SRC)
+	norminette $(SRC) ./get_next_line.h
 	@tput setaf 153; echo "Norminette"
 
 clean:
