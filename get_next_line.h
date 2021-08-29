@@ -5,19 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlerma-c <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:58:20 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/08/25 18:58:22 by dlerma-c         ###   ########.fr       */
+/*   Created: 2021/08/26 14:10:20 by dlerma-c          #+#    #+#             */
+/*   Updated: 2021/08/26 14:10:23 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 
 # define GET_NEXT_LINE_H
-
-# ifndef BUFFER_SIZE 
-# define BUFFER_SIZE
-
-#endif
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/25 18:58:04 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/08/25 20:49:56 by dlerma-c         ###   ########.fr       */
+/*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
+/*   Updated: 2021/08/26 14:19:33 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,19 @@ static int	till_end(const char *buf)
 char	*get_next_line(int fd)
 {
 	char	*buff;
+	char	*str;
 	ssize_t	size;
 
-	if (!(buff = malloc(BUFFER_SIZE * sizeof(char))))
+	buff = malloc(BUFFER_SIZE * sizeof(char));
+	if (buff == NULL)
 		return (NULL);
 	size = read(fd, buff, BUFFER_SIZE);
-	printf("SIZE: %zd", size);
-	printf("SIZE: %d", till_end(buff));
-	/*while (buff[BUFFER_SIZE -1] != '\n')
-	{
-		str = ft_strjoin(str, buff);
-		read(fd, buff, BUFFER_SIZE);
-	}*/
-	return (buff);
+	printf("SIZE: %zd\n", size);
+	printf("BUFF: %d", till_end(buff));
+	str = malloc(BUFFER_SIZE * sizeof(char));
+	str = ft_strjoin(buff, str);
+	size = read(fd, buff, BUFFER_SIZE);
+	printf("SIZE: %zd\n", size);
+	printf("BUFF: %d", till_end(buff));
+	return (str);
 }
