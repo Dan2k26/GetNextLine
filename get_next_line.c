@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/08/26 14:19:33 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/08/29 19:48:51 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,11 @@ char	*get_next_line(int fd)
 	printf("SIZE: %zd\n", size);
 	printf("BUFF: %d", till_end(buff));
 	str = malloc(BUFFER_SIZE * sizeof(char));
-	str = ft_strjoin(buff, str);
+	if (str == NULL)
+		return (NULL);
+	str = ft_strjoin(str, buff);
 	size = read(fd, buff, BUFFER_SIZE);
+	str = ft_strjoin(str, buff);
 	printf("SIZE: %zd\n", size);
 	printf("BUFF: %d", till_end(buff));
 	return (str);
