@@ -12,7 +12,14 @@ int	main(void)
 		return (0);
 	}
 	archive = get_next_line(fd);
-	printf("\n\tArchivo: \n%s\n", archive);
-	system("\nleaks a.out");
+	printf("\n\n\tArchivo: \n%s", archive);
+	/*while (archive)
+	{
+		printf("\n\n\tArchivo: \n%s", archive);
+		archive = get_next_line(fd);
+	}*/
+	/*archive = get_next_line(fd);
+	printf("%s", archive);*/
+	//system("\nleaks gnl.out");
 	return (0);
 }
