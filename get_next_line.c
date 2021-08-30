@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/08/29 21:20:14 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/08/30 15:20:57 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ static int	till_end(const char *buf)
 
 	i = 0;
 	while (buf[i] != '\n' && buf[i] != '\0')
+	{
+		/*if (buf[i] == '\n' && buf[i] == '\0')
+			return (0);*/
 		i++;
+	}
 	return (i);
 }
 
@@ -37,8 +41,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (size > 0)
 	{
-		printf("SIZE: %zd\n", size);
-		printf("BUFF: %d", till_end(buff));
+		if (till_end(buff) != BUFFER_SIZE)
+			return (str);
 		str = ft_strjoin(str, buff);
 		size = read(fd, buff, BUFFER_SIZE);
 	}

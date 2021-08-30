@@ -5,17 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "gcc - Compilar y depurar el archivo activo",
+            "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/Users/dlerma-c/Desktop/42/GNL/a.out",
+            "program": "${workspaceFolder}/a.out",
             "args": [],
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "environment": [],
             "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "C/C++: gcc compilar archivo activo"
+            "MIMode": "lldb"
         }
     ]
 }

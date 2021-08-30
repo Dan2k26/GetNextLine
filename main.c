@@ -13,6 +13,6 @@ int	main(void)
 	}
 	archive = get_next_line(fd);
 	printf("\n\tArchivo: \n%s\n", archive);
-	system("\nleaks get_line");
+	system("\nleaks a.out");
 	return (0);
 }

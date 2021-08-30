@@ -1,6 +1,6 @@
 NAME = get_line.a
 
-NUM = 5
+NUM = 3
 
 SRC = get_next_line.c get_next_line_utils.c main.c
 		
