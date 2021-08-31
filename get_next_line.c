@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/08/30 16:53:55 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/08/31 16:21:47 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,41 @@ static int	till_end(const char *buf)
 	return (i);
 }
 
+static void	assign_rest(char *buff, char *temp, int pos)
+{
+	int	i;
+
+	i = 0;
+	while (buff[pos])
+	{
+		temp[i] = buff[pos];
+		pos++;
+		i++;
+	}
+	temp[i] = '\0';
+}
+
 char	*get_next_line(int fd)
 {
-	char		*buff;
-	static char	*str;
+	char		buff[BUFFER_SIZE + 1];
+	char		*str;
+	static char	temp[BUFFER_SIZE + 1];
 	ssize_t		size;
 
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (buff == NULL)
-		return (NULL);
 	size = read(fd, buff, BUFFER_SIZE);
 	str = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	str = ft_strjoin(str, temp);
 	while (size > 0)
 	{
-/*Se podria pasar al join hasta una posicion, y no que coie todo
-str lo tiene que tener guaradado para el resto de veces que entre en el bucle
-llamadoo por el main*/
+		buff[BUFFER_SIZE] = '\0';
 		str = ft_strjoin(str, buff);
 		if (till_end(buff) != BUFFER_SIZE)
 		{
-			free(buff);
+			assign_rest(buff, temp, till_end(buff) + 1);
 			return (str);
 		}
 		size = read(fd, buff, BUFFER_SIZE);
 		free(str);
 	}
-	free(buff);
 	return (str);
 }

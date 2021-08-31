@@ -64,7 +64,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	size = 0;
-	while (s2[size])
+	//me copia tambien el salto de linea, sino se quedaria una posicion antes
+	while (s2[size] && s2[size - 1] != '\n')
 	{
 		str[i] = s2[size];
 		i++;

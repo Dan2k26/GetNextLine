@@ -1,25 +1,25 @@
 #include "get_next_line.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	int		fd;
 	char	*archive;
 
-	fd = open("/Users/dlerma-c/Desktop/42/GNL/fichero1", O_RDONLY);
-	if (fd == -1)
+	if (argc == 2)
 	{
-		printf("(%d)Error al abrir el archivo.\n", fd);
-		return (0);
-	}
-	archive = get_next_line(fd);
-	printf("\n\n\tArchivo: \n%s", archive);
-	/*while (archive)
-	{
-		printf("\n\n\tArchivo: \n%s", archive);
+		fd = open(argv[1], O_RDONLY);
+		if (fd == -1)
+		{
+			printf("(%d)Error al abrir el archivo.\n", fd);
+			return (0);
+		}
 		archive = get_next_line(fd);
-	}*/
-	/*archive = get_next_line(fd);
-	printf("%s", archive);*/
-	//system("\nleaks gnl.out");
+		printf("\n\n\tArchivo: \n%s", archive);
+		/*archive = get_next_line(fd);
+		printf("%s", archive);*/
+		system("\nleaks gnl.out");
+	}
+	else
+		printf("Argumentos mal introducidos");
 	return (0);
 }

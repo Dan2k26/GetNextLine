@@ -20,7 +20,7 @@ all: $(NAME)
 run: all
 	@tput setaf 214; echo "MAKEFLE DE GET_NEXT_LINE"
 	@gcc $(CFLAGS) $(NAME) -g3 -o gnl.out  
-	./gnl.out |cat -e
+	./gnl.out ficheros/$(filter-out $@,$(MAKECMDGOALS)) | cat -e
 
 debug: all
 	@gcc $(CFLAGS) $(SRC) -g3 -o gnl.out
