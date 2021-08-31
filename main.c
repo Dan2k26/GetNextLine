@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlerma-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/31 20:51:56 by dlerma-c          #+#    #+#             */
+/*   Updated: 2021/08/31 20:51:57 by dlerma-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 int	main(int argc, char **argv)
@@ -15,8 +27,8 @@ int	main(int argc, char **argv)
 		}
 		archive = get_next_line(fd);
 		printf("\n\n\tArchivo: \n%s", archive);
-		/*archive = get_next_line(fd);
-		printf("%s", archive);*/
+		archive = get_next_line(fd);
+		printf("%s", archive);
 		system("\nleaks gnl.out");
 	}
 	else

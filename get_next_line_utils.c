@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlerma-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
+/*   Updated: 2021/08/31 20:51:39 by dlerma-c         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	ft_strlen(const char *c)
@@ -10,39 +22,36 @@ size_t	ft_strlen(const char *c)
 	return (i);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	unsigned int		i;
-	char				*str;
+	size_t		num;
+	size_t		i;
+	char		*str;
+	const char	*s;
 
 	i = -1;
-	str = (char *) s;
-	while (++i < n)
-		str[i] = 0;
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*ptr;
-
-	ptr = malloc(count * size);
-	if (ptr == NULL)
+	num = sizeof(dst);
+	str = dst;
+	s = src;
+	if (dst == NULL && src == NULL)
 		return (NULL);
-	ft_bzero(ptr, count * size);
-	return (ptr);
+	while (++i < n)
+		str[i] = s[i];
+	return (str);
 }
 
-void	ft_strlcpy(char *dst, const char *src, int dstsize)
+char	*ft_strdup(const char *s1)
 {
-	int	i;
+	char	*str;
+	int		num;
 
-	i = 0;
-	while (i < dstsize && src[i] != '\0')
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
+	num = ft_strlen((char *)s1);
+	str = malloc(num + 1);
+	if (str == NULL)
+		return (NULL);
+	ft_memcpy(str, s1, num * sizeof(char) + 1);
+	str[num] = '\0';
+	return (str);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -64,8 +73,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		i++;
 	}
 	size = 0;
-	//me copia tambien el salto de linea, sino se quedaria una posicion antes
-	while (s2[size] && s2[size - 1] != '\n')
+	while (s2[size] && s2[size] != '\n')
 	{
 		str[i] = s2[size];
 		i++;
