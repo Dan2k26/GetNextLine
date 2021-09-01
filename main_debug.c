@@ -11,11 +11,12 @@ int	main(void)
 		return (0);
 	}
 	archive = get_next_line(fd);
-	while (archive != '\0')
+	while (archive)
 	{
 		printf("\n\n\tArchivo: \n%s", archive);
 		archive = get_next_line(fd);
 	}
+	system("\nleaks gnl.out");
     close(fd);
 	return (0);
 }

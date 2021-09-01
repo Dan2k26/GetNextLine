@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dlerma-c <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/08/31 20:51:39 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/01 16:27:59 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,20 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strchr(const char *s, int c)
 {
 	char	*str;
-	int		size;
 	int		i;
 
+	str = (char *)s;
 	i = 0;
-	if (s1 == NULL || s2 == NULL)
-		return (NULL);
-	size = ft_strlen(s1) + ft_strlen(s2);
-	str = (char *)malloc(size + 1 * sizeof(char));
-	if (str == NULL)
-		return (NULL);
-	while (s1[i])
+	while (str[i])
 	{
-		str[i] = s1[i];
+		if (str[i] == (char)c)
+			return (&str[i]);
 		i++;
 	}
-	size = 0;
-	while (s2[size] && s2[size] != '\n')
-	{
-		str[i] = s2[size];
-		i++;
-		size++;
-	}
-	str[i] = '\0';
-	return (str);
+	if (c == '\0')
+		return (&str[i]);
+	return (NULL);
 }
