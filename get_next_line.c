@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/01 16:56:20 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:27:47 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,43 +31,22 @@ static char	*join_char(char const *s1, char const *s2, int size)
 	int		y;
 	int		i;
 
-	i = 0;
+	i = -1;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	//sumo a largura de s1 y el size
-	str = (char *)malloc(ft_strlen(s1) + size + 1 * sizeof(char));
+	str = (char *)malloc(ft_strlen(s1) + size + 2 * sizeof(char));
 	if (str == NULL)
 		return (NULL);
-	while (s1[i])
-	{
+	while (s1[++i])
 		str[i] = s1[i];
-		i++;
-	}
-	y = 0;
-	while (s2[y] && y < size)
-	{
-		str[i] = s2[y];
-		i++;
-		y++;
-	}
-	str[i] = '\0';
+	y = -1;
+	while (s2[++y] && y < size)
+		str[i++] = s2[y];
+	if (s2[y] == '\n')
+		str[i] = '\n';
+	str[++i] = '\0';
 	return (str);
-}
-
-
-
-static void	assign_rest(char *buff, char *temp, int pos)
-{
-	int	i;
-
-	i = 0;
-	while (buff[pos])
-	{
-		temp[i] = buff[pos];
-		pos++;
-		i++;
-	}
-	temp[i] = '\0';
 }
 
 static char	*copy_rest(char *buff, int size)
@@ -76,12 +55,17 @@ static char	*copy_rest(char *buff, int size)
 	int		i;
 	
 	i = 0;
-	aux = malloc(ft_strlen(buff) + size + 1 * sizeof(char));
-	while (buff[size])
+	while (i <= size)
 	{
-		aux[i] = buff[size];
+		buff++;
 		i++;
-		size++;
+	}
+	i = 0;
+	aux = malloc(ft_strlen(buff) + 1 * sizeof(char));
+	while (buff[i])
+	{
+		aux[i] = buff[i];
+		i++;
 	}
 	aux[i] =  '\0';
 	return (aux);
@@ -117,7 +101,6 @@ char	*get_next_line(int fd)
 		hay que fiarse del size. Empieza a utilizar posiciones*/
 		if (ft_strchr(buff, '\n') != NULL)
 		{
-			assign_rest(buff, temp, till_end(buff));
 			free(temp);
 			return (str);
 		}
