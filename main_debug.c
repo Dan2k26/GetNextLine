@@ -17,6 +17,6 @@ int	main(void)
 		archive = get_next_line(fd);
 	}
     close(fd);
-	//system("\nleaks gnl.out");
+	system("\nleaks gnl.out");
 	return (0);
 }

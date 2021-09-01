@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:10:20 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/01 17:48:25 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/01 19:33:55 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 
-# define BUFFER_SIZE 8
+# define BUFFER_SIZE 5
 
 char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);

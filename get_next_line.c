@@ -6,12 +6,12 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/01 18:27:47 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/01 20:40:15 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+/*Cuenta los caracteres antes de un salto de linea*/
 static int	till_end(const char *buf)
 {
 	int	i;
@@ -21,6 +21,7 @@ static int	till_end(const char *buf)
 		i++;
 	return (i);
 }
+
 /*
 Une las dos cadenas pero hasta la posicon que  dice size y le pone 
 un final de linea o un nulll dependiendo del carracter mandado
@@ -43,18 +44,17 @@ static char	*join_char(char const *s1, char const *s2, int size)
 	y = -1;
 	while (s2[++y] && y < size)
 		str[i++] = s2[y];
-	if (s2[y] == '\n')
-		str[i] = '\n';
 	str[++i] = '\0';
 	return (str);
 }
-
+/*Copia a partir del salto de linea*/
 static char	*copy_rest(char *buff, int size)
 {
 	char	*aux;
 	int		i;
-	
+
 	i = 0;
+	//avanza buffer hasta la posicion de sato de linea incluida
 	while (i <= size)
 	{
 		buff++;
@@ -67,7 +67,7 @@ static char	*copy_rest(char *buff, int size)
 		aux[i] = buff[i];
 		i++;
 	}
-	aux[i] =  '\0';
+	aux[i] = '\0';
 	return (aux);
 }
 
@@ -80,6 +80,7 @@ char	*get_next_line(int fd)
 	ssize_t		size;
 
 	size = read(fd, buff, BUFFER_SIZE);
+	buff[size] = '\0';
 	str = "";
 	if (size == 0 || fd == 0)
 		return (NULL);
@@ -90,24 +91,21 @@ char	*get_next_line(int fd)
 	}
 	while (size > 0)
 	{
+		//si buffer tiene un salto de linea
 		if (ft_strchr(buff, '\n') != NULL)
 		{
 			size = till_end(buff);
-			aux = copy_rest(buff, size);
-		}
-		temp = join_char(str, buff, size);
-		str = ft_strdup(temp);
-		/*Revisar la funcion till end porque ya no cuenta hastta que hay un final
-		hay que fiarse del size. Empieza a utilizar posiciones*/
-		if (ft_strchr(buff, '\n') != NULL)
-		{
+			aux = copy_rest(buff, size );
+			//si aux vale \n se incuye dos veces
+			temp = join_char(str, buff, size + 1);
+			str = ft_strdup(temp);
 			free(temp);
 			return (str);
 		}
+		temp = join_char(str, buff, size);
+		str = ft_strdup(temp);
 		size = read(fd, buff, BUFFER_SIZE);
 		free(temp);
 	}
-	//free(str);
-	//getchar();
 	return (str);
 }
