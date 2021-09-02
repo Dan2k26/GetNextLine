@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/01 16:27:59 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/02 18:35:59 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,35 @@ size_t	ft_strlen(const char *c)
 	while (c[i] != '\0')
 		i++;
 	return (i);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	int		size;
+	int		i;
+
+	i = 0;
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	size = ft_strlen(s1) + ft_strlen(s2);
+	str = (char *)malloc(size + 1 * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	size = 0;
+	while (s2[size])
+	{
+		str[i] = s2[size];
+		i++;
+		size++;
+	}
+	str[i] = '\0';
+	return (str);
 }
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
@@ -52,22 +81,4 @@ char	*ft_strdup(const char *s1)
 	ft_memcpy(str, s1, num * sizeof(char) + 1);
 	str[num] = '\0';
 	return (str);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	char	*str;
-	int		i;
-
-	str = (char *)s;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)c)
-			return (&str[i]);
-		i++;
-	}
-	if (c == '\0')
-		return (&str[i]);
-	return (NULL);
 }
