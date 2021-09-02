@@ -6,12 +6,15 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/02 19:11:53 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/02 20:39:53 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
+/*
+* Junta las dos cadenas y crea un nuevo espacio con el tamaño de
+* la cadena concatenada y la devuelve para poder devolverla.
+*/
 static char	*join_chars(char *buff, char *str)
 {
 	char	*concat;
@@ -45,6 +48,8 @@ char	*get_next_line(int fd)
 	while (size > 0)
 	{
 		size = read(fd, buff, BUFFER_SIZE);
+		if (buff[size - 1] == '\n' || size == 0)
+			return (str);
 		str = join_chars(buff, str);
 	}
 	str_fnl = str;
