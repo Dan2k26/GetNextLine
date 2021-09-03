@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/03 14:53:51 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/03 16:18:51 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ static char	*join_chars(char *buff, char *str)
 {
 	char	*concat;
 
-	/*if (buff != '\0')
-	{*/
-		concat = ft_strjoin(str, buff);
-		free(str);
-		str = ft_strdup(concat);
-		free(concat);
-	/*}
-	else
-		str = ft_strdup("s");*/
+	concat = ft_strjoin(str, buff);
+	free(str);
+	str = ft_strdup(concat);
+	free(concat);
 	return (str);
 }
 
@@ -52,17 +47,30 @@ char	*get_next_line(int fd)
 	if (size == 0)
 		return (NULL);
 	buff[size] = '\0';
-	str = ft_strjoin("", buff);
+	/*if (aux)
+	{
+		str = ft_strjoin(aux, buff);
+		free(aux);
+	}
+	else*/
+		str = ft_strjoin("", buff);
 	while (size > 0)
 	{
+		/*if (buff[0] == '\n')
+		{
+			str_fnl = "\n";
+			free(str);
+			return (str_fnl);
+		}*/
 		size = read(fd, buff, BUFFER_SIZE);
 		buff[size] = '\0';
-		if (buff[size - 1] == '\n' || size == 0)
+		if (buff[size - 1] == '\n')
 		{
+			//aux = ft_strdup(buff);
 			str = join_chars(buff, str);
 			str_fnl = str;
-			if (buff[0] != '\0')
-				free(str); //libera cuando no hay nada
+			//if (buff[0] != '\0')
+				//free(str); //libera cuando no hay nada
 			return (str_fnl);
 		}
 		str = join_chars(buff, str);
