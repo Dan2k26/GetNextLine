@@ -1,0 +1,65 @@
+#include "get_next_line.h"
+/*
+* Junta las dos cadenas y crea un nuevo espacio con el tamaño de
+* la cadena concatenada y la devuelve para poder devolverla.
+*/
+static char	*join_chars(char *buff, char *str)
+{
+	char	*concat;
+	char	*aux;
+
+	concat = ft_strjoin(str, buff);
+	aux = ft_strdup(concat);
+	printf("concat : %s\n", concat);
+	if (concat)
+		free(concat);
+	return (aux);
+}
+/*
+* buff -> string que acaba de leer del fichero
+* str -> string anterior a buff actual
+* concat -> union de str y buff
+* str_fnl -> la ultima concat
+* size -> el numero de caracteres que ha leido (puede ser distinto a BUFFER_SIZE)
+*/
+char	*get_next_line(int fd)
+{
+	char		buff[BUFFER_SIZE + 1];
+	char		*str;
+	char		*aux;
+	//char		*str_fnl;
+	//static char	*aux;
+	ssize_t	size;
+	if (fd < 0 || read(fd, buff, 0) == -1)
+		return (NULL);
+	size = read(fd, buff, BUFFER_SIZE);
+	if (size == 0)
+		return (NULL);
+	buff[size] = '\0';
+	str = malloc(ft_strlen(buff) + 1 * sizeof(char));
+		
+
+	while (size > 0)
+	{
+		if (buff[0] == '\n')
+			return ("\n");
+		size = read(fd, buff, BUFFER_SIZE);
+		buff[size] = '\0';
+		if (buff[size - 1] == '\n' || size == 0)
+		{
+			aux = str;
+			str = join_chars(buff, str);
+			free(aux);
+			if (buff[0] != '\0')
+				free(str);
+			//str_fnl = str;
+			return (str);
+		}
+		aux = str;
+		str = join_chars(buff, str); 
+		free(aux);
+	}
+	//str_fnl = str;
+	//free(str);
+	return (str);
+}

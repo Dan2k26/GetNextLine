@@ -13,10 +13,14 @@ int	main(void)
 	archive = get_next_line(fd);
 	while (archive)
 	{
+		//sleep(2);
+		//free(archive);
 		printf("Archivo: %s", archive);
 		archive = get_next_line(fd);
 	}
+	printf("Archivo: %s", archive);
+	//free(archive);
     close(fd);
-	system("\nleaks gnl.out");
+	system("\nleaks -q gnl.out");
 	return (0);
 }
