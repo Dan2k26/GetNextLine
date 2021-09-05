@@ -18,7 +18,6 @@ int	main(void)
 		printf("Archivo: %s", archive);
 		archive = get_next_line(fd);
 	}
-	printf("Archivo: %s", archive);
 	//free(archive);
     close(fd);
 	system("\nleaks -q gnl.out");

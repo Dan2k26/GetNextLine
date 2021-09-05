@@ -14,6 +14,8 @@ CFLAGS = -Wall -Wextra -Werror # -D BUFFER_SIZE=$(NUM)
 
 all: $(NAME)
 
+#gcc get_next_line.c get_next_line_utils.c main_debug.c -fsanitize=address -o gnl.out
+
 $(NAME): $(OBJSDEBUG)
 	ar r $(NAME) $(OBJS) $(OBJSDEBUG)
 	@echo "\033[1;105mWork compile\033[0m"
