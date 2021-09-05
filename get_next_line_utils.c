@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/03 17:36:04 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/05 14:16:28 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,22 @@ char	*ft_strdup(const char *s1)
 	ft_memcpy(str, s1, num * sizeof(char) + 1);
 	str[num] = '\0';
 	return (str);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	*str;
+	int		i;
+
+	str = (char *)s;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return (&str[i]);
+		i++;
+	}
+	if (c == '\0')
+		return (&str[i]);
+	return (NULL);
 }
