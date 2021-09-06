@@ -26,7 +26,7 @@ run: all
 	./gnl.out ficheros/$(filter-out $@,$(MAKECMDGOALS)) |cat -e
 
 debug: 
-	gcc $(CFLAGS) $(SRCDEBUG) -g3  -o gnl.out 
+	gcc $(SRCDEBUG) -g3  -o gnl.out 
 	@tput setaf 214; echo "DEBUG"
 
 normi:
