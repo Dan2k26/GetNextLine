@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/06 19:07:34 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/06 22:08:17 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,24 @@
 static char	*till_newline(char *buff)
 {
 	char	*str;
-	char	*aux;
 	int		i;
 
 	i = 0;
 	while (buff[i] != '\n' && buff[i])
 		i++;
 	str = malloc(sizeof(char) * (i + 1));
-	aux = str;
 	ft_memcpy(str, buff, i + 1);
 	return (str);
 }
 
 static char	*add_new_line(char *str, char *buff)
 {
-	char	*aux;
 	char	*s;
+	char	*str_newline;
 
-	s = "";
-	aux = s;
-	s = ft_strjoin(str, till_newline(buff));
+	str_newline = till_newline(buff);
+	s = ft_strjoin(str, str_newline);
+	free(str_newline);
 	return (s);
 }
 
@@ -61,6 +59,7 @@ char	*get_next_line(int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*str;
+	char		*aux;
 	static char	*temp;
 	ssize_t		size;
 
@@ -76,9 +75,14 @@ char	*get_next_line(int fd)
 		if (ft_strchr(buff, '\n') != NULL)
 		{
 			temp = ft_strdup(ft_strchr(buff, '\n') + 1);
-			return (add_new_line(str, buff));
+			aux = str;
+			str = add_new_line(aux, buff);
+			free(aux);
+			return (str);
 		}
-		str = add_new_line(str, buff);
+		aux = str;
+		str = add_new_line(aux, buff);
+		free(aux);
 		size = read(fd, buff, BUFFER_SIZE);
 		buff[size] = '\0';
 	}
