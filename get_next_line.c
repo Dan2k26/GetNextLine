@@ -6,14 +6,14 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/06 18:21:52 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/06 19:07:34 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*COpia hasta un salto de linea, con este incluido*/
-static char *till_newline(char *buff)
+static char	*till_newline(char *buff)
 {
 	char	*str;
 	char	*aux;
@@ -23,8 +23,30 @@ static char *till_newline(char *buff)
 	while (buff[i] != '\n' && buff[i])
 		i++;
 	str = malloc(sizeof(char) * (i + 1));
-	aux = str; 
+	aux = str;
 	ft_memcpy(str, buff, i + 1);
+	return (str);
+}
+
+static char	*add_new_line(char *str, char *buff)
+{
+	char	*aux;
+	char	*s;
+
+	s = "";
+	aux = s;
+	s = ft_strjoin(str, till_newline(buff));
+	return (s);
+}
+
+static char	*conditions(char *temp)
+{
+	char	*str;
+
+	if (temp)
+		str = ft_strdup(temp);
+	else
+		str = ft_strdup("");
 	return (str);
 }
 
@@ -39,8 +61,6 @@ char	*get_next_line(int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*str;
-	char		*aux;
-	char		*aux_temp;
 	static char	*temp;
 	ssize_t		size;
 
@@ -50,29 +70,15 @@ char	*get_next_line(int fd)
 	if (size == 0)
 		return (NULL);
 	buff[size] = '\0';
-	//depende si es la primera vez qeu pasa o no  
-	if (temp)
-		str = ft_strdup(temp);
-	else
-		str = ft_strdup("");
+	str = conditions(temp);
 	while (size > 0)
 	{
-		//encuentra la posicion de salto de linea
-		aux_temp = ft_strchr(buff, '\n');
-		//si hay un salto de linea
-		if (aux_temp != NULL)
+		if (ft_strchr(buff, '\n') != NULL)
 		{
-		//le añado uno para que parta del siguiente
-			aux_temp++;
-			temp = ft_strdup(aux_temp);
-			aux = str;
-			str = ft_strjoin(str, till_newline(buff));
-			free(aux);
-			return (str);
+			temp = ft_strdup(ft_strchr(buff, '\n') + 1);
+			return (add_new_line(str, buff));
 		}
-		aux = str;
-		str = ft_strjoin(str, till_newline(buff));
-		free(aux);
+		str = add_new_line(str, buff);
 		size = read(fd, buff, BUFFER_SIZE);
 		buff[size] = '\0';
 	}
