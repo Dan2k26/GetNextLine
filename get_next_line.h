@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:10:20 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/05 17:38:03 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/06 16:48:51 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *s1);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
 char	*ft_strchr(const char *s, int c);
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 #endif
