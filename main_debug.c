@@ -20,6 +20,6 @@ int	main(void)
 	}
 	free(archive);
     close(fd);
-	//system("\nleaks -q gnl.out");
+	system("\nleaks -q gnl.out");
 	return (0);
 }

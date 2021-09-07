@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/07 18:27:50 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/07 19:18:39 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,20 @@ static char	*rest_of_chars(char *aux)
 		ft_memcpy(str, pos, ft_strlen(pos));
 	}
 	return (str);
-}
+}*/
 
-static char	*ass_chars(char *aux, char *buff)
+/*static char	*ass_chars(char *aux)
 {
 	int		i;
 	char	*str;
-	char	*a;
 	
 	i = 0;
 	//da los valores hasta el salto de linea
 	while (aux[i] != '\n' && aux[i])
 		i++;
-	str = malloc(sizeof(char) * i + 1);
+	str = malloc(sizeof(char) * i + 2);
 	ft_memcpy(str, aux, i + 1);
-	//concatenar los valores
-	a = str;
-	str = ft_strjoin(a, buff);
-	free(a);
+	str[i + 2] = '\0';
 	return (str);
 }*/
 
@@ -106,6 +102,8 @@ char	*get_next_line(int fd)
 //3- Si no hay temp inicializo str
 	if (!temp)
 		str = ft_strdup("");
+	else
+		str = ft_strdup(temp);
 //4- Bucle de lectura
 	while (size > 0)
 	{
@@ -123,9 +121,16 @@ char	*get_next_line(int fd)
 		size = read(fd, buff, BUFFER_SIZE);
 		buff[size] = '\0';
 	}
-
-	
-
+//5- Si tiene salto de linea guardar el temp lo sobrante
+	/* LEAKS
+	if (ft_strchr(str, '\n') != NULL)
+		temp = ft_strdup(ft_strchr(str, '\n') + 1);*/
+	/*if (temp)
+	{
+		aux = str;
+		str = ass_chars(aux);
+		free(aux);
+	}*/
 
 
 	return (str);
