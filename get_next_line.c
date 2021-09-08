@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/08 14:25:41 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/08 16:51:13 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*rest_of_chars(char *aux)
 	return (str);
 }*/
 
-/*static char	*ass_chars(char *aux)
+/*static char	*assign_chars(char *aux)
 {
 	int		i;
 	char	*str;
@@ -83,7 +83,6 @@ static char *read_line(int size, int fd, char *buff, char **str)
 
 	while (size > 0)
 	{
-		buff[size] = '\0';
 		//Concatenar la linea actual con la anterior
 		aux = *str;
 		*str = ft_strjoin(aux, buff);
@@ -94,6 +93,7 @@ static char *read_line(int size, int fd, char *buff, char **str)
 			break ;
 		//Si no sigue leyendo
 		size = read(fd, buff, BUFFER_SIZE);
+		buff[size] = '\0';
 	}
 	return (*str);
 }
@@ -110,7 +110,7 @@ char	*get_next_line(int fd)
 	char		buff[BUFFER_SIZE + 1];
 	char		*str;
 	//char		*aux;
-	static char	*temp;
+	static char	*remainder;
 	ssize_t		size;
 //1- Comprobar errores de fichero
 	if (read(fd, buff, 0) == -1 || BUFFER_SIZE < 1)
@@ -119,35 +119,34 @@ char	*get_next_line(int fd)
 	size = read(fd, buff, BUFFER_SIZE);
 	if (size == 0)
 		return (NULL);
+	buff[size] = '\0';
 //3- Si no hay temp inicializo str
-	if (!temp)
+	if (!remainder)
 		str = ft_strdup("");
 	else
-		str = ft_strdup(temp);
+	{
+		str = ft_strdup(remainder);
+		free(remainder);
+	}
 //4- Bucle de lectura
 	//paso por referencia str, que es la que puede tener un resultado u otro
 	str = read_line(size, fd, buff, &str);
 //5- Si tiene salto de linea guardar el temp lo sobrante
 	// LEAKS
 	/*if (ft_strchr(str, '\n') != NULL)
-	{
-		temp = ft_strdup(ft_strchr(str, '\n') + 1);
-		//printf("PUNTERO: %p       %s\n", temp);
-	}
-	if (str == NULL)
-	{
-		free(str);
-		return (NULL);
-	}
+		remainder = ft_strdup(ft_strchr(str, '\n') + 1);*/
 //6- Si existe temp
-	if (temp)
+	/*if (remainder)
 	{
 		aux = str;
-		str = ass_chars(aux);
+		str = assign_chars(aux);
 		free(aux);
-		free(temp);
-		temp = NULL;
+	}
+	else if (!remainder)
+	{
+		aux = ft_strdup(remainder);
+		free(remainder);
+		return (aux);
 	}*/
-
 	return (str);
 }
