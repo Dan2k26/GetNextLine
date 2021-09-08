@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/08 18:57:21 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/08 20:32:32 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,20 @@ char	*get_next_line(int fd)
 	if (size == 0 && remainder[0] == '\0')
 		return (NULL);
 	buff[size] = '\0';
-//3- Si no hay temp inicializo str
+//3- La estatica ya esta inicializada
 	str = ft_strdup((char *)remainder);
-	ft_bzero(remainder, sizeof(remainder));	
+	ft_bzero(remainder, sizeof(remainder));
 //4- Bucle de lectura
 	//paso por referencia str, que es la que puede tener un resultado u otro
 	str = read_line(size, fd, buff, &str);
 //5- Si tiene salto de linea guardar el temp lo sobrante
 	// LEAKS
-	if (ft_strchr(str, '\n') != NULL )
+	if (ft_strchr(str, '\n') != NULL)
 	{
 		ft_memcpy((char *)remainder, ft_strchr(str, '\n') + 1,
 			ft_strlen(ft_strchr(str, '\n') + 1));
-		remainder[ft_strlen(remainder)] = '\0';
+		remainder[ft_strlen(remainder) ] = '\0';
 	}
-	/*if (str == NULL)
-		return (NULL);*/
 //6- Si existe str, se le asignan os caracteres antes del salto de linea
 	if (str)
 	{
@@ -104,6 +102,7 @@ char	*get_next_line(int fd)
 		str = assign_chars(aux);
 		free(aux);
 	}
+	///NO ENTRA
 	else
 	{
 		aux = str;
