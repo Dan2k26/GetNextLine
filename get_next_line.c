@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/07 19:18:39 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/08 14:25:41 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,27 @@ static char	*rest_of_chars(char *aux)
 	return (str);
 }*/
 
+static char *read_line(int size, int fd, char *buff, char **str)
+{
+	char	*aux;
+
+	while (size > 0)
+	{
+		buff[size] = '\0';
+		//Concatenar la linea actual con la anterior
+		aux = *str;
+		*str = ft_strjoin(aux, buff);
+		free(aux);
+		//Comprueba el salto de linea
+		//Si hay salto de linea, salimos del bucle
+		if (ft_strchr(*str, '\n') != NULL)
+			break ;
+		//Si no sigue leyendo
+		size = read(fd, buff, BUFFER_SIZE);
+	}
+	return (*str);
+}
+
 /*
 * buff -> string que acaba de leer del fichero
 * str -> linea que tiene que devolver
@@ -88,7 +109,7 @@ char	*get_next_line(int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*str;
-	char		*aux;
+	//char		*aux;
 	static char	*temp;
 	ssize_t		size;
 //1- Comprobar errores de fichero
@@ -98,40 +119,35 @@ char	*get_next_line(int fd)
 	size = read(fd, buff, BUFFER_SIZE);
 	if (size == 0)
 		return (NULL);
-	buff[size] = '\0';
 //3- Si no hay temp inicializo str
 	if (!temp)
 		str = ft_strdup("");
 	else
 		str = ft_strdup(temp);
 //4- Bucle de lectura
-	while (size > 0)
-	{
-		//Comprobar si hay salto de linea
-//		temp = ft_strchr(str, '\n');
-		//Concatenar la linea actual con la anterior
-		aux = str;
-		str = ft_strjoin(aux, buff);
-		free(aux);
-		//Comprueba el salto de linea
-		//Si hay salto de linea, salimos del bucle
-		if (ft_strchr(str, '\n') != NULL)
-			break ;
-		//Si no sigue leyendo
-		size = read(fd, buff, BUFFER_SIZE);
-		buff[size] = '\0';
-	}
+	//paso por referencia str, que es la que puede tener un resultado u otro
+	str = read_line(size, fd, buff, &str);
 //5- Si tiene salto de linea guardar el temp lo sobrante
-	/* LEAKS
-	if (ft_strchr(str, '\n') != NULL)
-		temp = ft_strdup(ft_strchr(str, '\n') + 1);*/
-	/*if (temp)
+	// LEAKS
+	/*if (ft_strchr(str, '\n') != NULL)
+	{
+		temp = ft_strdup(ft_strchr(str, '\n') + 1);
+		//printf("PUNTERO: %p       %s\n", temp);
+	}
+	if (str == NULL)
+	{
+		free(str);
+		return (NULL);
+	}
+//6- Si existe temp
+	if (temp)
 	{
 		aux = str;
 		str = ass_chars(aux);
 		free(aux);
+		free(temp);
+		temp = NULL;
 	}*/
-
 
 	return (str);
 }
