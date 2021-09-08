@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/08 17:47:47 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:27:35 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,17 @@ static char	*read_line(int size, int fd, char *buff, char **str)
 	return (*str);
 }
 
+static void	ft_bzero(void *s, size_t n)
+{
+	unsigned int		i;
+	char				*str;
+
+	i = -1;
+	str = (char *) s;
+	while (++i < n)
+		str[i] = 0;
+}
+
 /*
 * buff -> string que acaba de leer del fichero
 * str -> linea que tiene que devolver
@@ -124,18 +135,23 @@ char	*get_next_line(int fd)
 	if (!(char *)remainder)
 		str = ft_strdup("");
 	else
+	{
 		str = ft_strdup((char *)remainder);
+		ft_bzero(remainder, sizeof(remainder));
+	}
 //4- Bucle de lectura
 	//paso por referencia str, que es la que puede tener un resultado u otro
 	str = read_line(size, fd, buff, &str);
 //5- Si tiene salto de linea guardar el temp lo sobrante
 	// LEAKS
-	if (ft_strchr(str, '\n') != NULL && str[0] != '\0')
+	if (ft_strchr(str, '\n') != NULL )
 	{
 		ft_memcpy((char *)remainder, ft_strchr(str, '\n') + 1,
-			sizeof(ft_strchr(str, '\n') + 1));
+			ft_strlen(ft_strchr(str, '\n') + 1));
 		remainder[ft_strlen(remainder)] = '\0';
 	}
+	if (str == NULL)
+		return (NULL);
 //6- Si existe temp
 	if ((char *)remainder)
 	{
@@ -143,11 +159,12 @@ char	*get_next_line(int fd)
 		str = assign_chars(aux);
 		free(aux);
 	}
-	/*else
+	else
 	{
 		aux = str;
-		str = ft_strdup(remainder);
+		str = ft_strdup((char *)remainder);
 		free(aux);
-	}*/
+		ft_bzero(remainder, sizeof(remainder));
+	}
 	return (str);
 }
