@@ -6,61 +6,11 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/08 18:27:35 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/08 18:57:21 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/*COpia hasta un salto de linea, con este incluido*/
-/*static char	*till_newline(char *buff)
-{
-	char	*str;
-	int		i;
-
-	i = 0;
-	while (buff[i] != '\n' && buff[i])
-		i++;
-	str = malloc(sizeof(char) * (i + 1));
-	ft_memcpy(str, buff, i + 1);
-	return (str);
-}
-
-static char	*add_new_line(char *str, char *buff)
-{
-	char	*s;
-	char	*str_newline;
-
-	str_newline = till_newline(buff);
-	s = ft_strjoin(str, str_newline);
-	free(str_newline);
-	return (s);
-}
-
-static char	*conditions(char *temp)
-{
-	char	*str;
-
-	if (temp)
-		str = ft_strdup(temp);
-	else
-		str = ft_strdup("");
-	return (str);
-}
-
-static char	*rest_of_chars(char *aux)
-{
-	char	*pos;
-	char	*str;
-
-	if (ft_strchr(aux, '\n') != NULL)
-	{
-		pos = ft_strchr(aux, '\n') + 1;
-		str = malloc(ft_strlen(pos) + 1);
-		ft_memcpy(str, pos, ft_strlen(pos));
-	}
-	return (str);
-}*/
 
 static char	*assign_chars(char *aux)
 {
@@ -128,17 +78,12 @@ char	*get_next_line(int fd)
 		return (NULL);
 //2- Leer y comprobar que no da error 
 	size = read(fd, buff, BUFFER_SIZE);
-	if (size == 0)
+	if (size == 0 && remainder[0] == '\0')
 		return (NULL);
 	buff[size] = '\0';
 //3- Si no hay temp inicializo str
-	if (!(char *)remainder)
-		str = ft_strdup("");
-	else
-	{
-		str = ft_strdup((char *)remainder);
-		ft_bzero(remainder, sizeof(remainder));
-	}
+	str = ft_strdup((char *)remainder);
+	ft_bzero(remainder, sizeof(remainder));	
 //4- Bucle de lectura
 	//paso por referencia str, que es la que puede tener un resultado u otro
 	str = read_line(size, fd, buff, &str);
@@ -150,10 +95,10 @@ char	*get_next_line(int fd)
 			ft_strlen(ft_strchr(str, '\n') + 1));
 		remainder[ft_strlen(remainder)] = '\0';
 	}
-	if (str == NULL)
-		return (NULL);
-//6- Si existe temp
-	if ((char *)remainder)
+	/*if (str == NULL)
+		return (NULL);*/
+//6- Si existe str, se le asignan os caracteres antes del salto de linea
+	if (str)
 	{
 		aux = str;
 		str = assign_chars(aux);
