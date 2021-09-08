@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/08 16:51:13 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/08 17:47:47 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	*rest_of_chars(char *aux)
 	return (str);
 }*/
 
-/*static char	*assign_chars(char *aux)
+static char	*assign_chars(char *aux)
 {
 	int		i;
 	char	*str;
@@ -71,13 +71,13 @@ static char	*rest_of_chars(char *aux)
 	//da los valores hasta el salto de linea
 	while (aux[i] != '\n' && aux[i])
 		i++;
-	str = malloc(sizeof(char) * i + 2);
+	str = malloc(sizeof(char) * i + 1);
 	ft_memcpy(str, aux, i + 1);
-	str[i + 2] = '\0';
+	str[i + 1] = '\0';
 	return (str);
-}*/
+}
 
-static char *read_line(int size, int fd, char *buff, char **str)
+static char	*read_line(int size, int fd, char *buff, char **str)
 {
 	char	*aux;
 
@@ -109,8 +109,8 @@ char	*get_next_line(int fd)
 {
 	char		buff[BUFFER_SIZE + 1];
 	char		*str;
-	//char		*aux;
-	static char	*remainder;
+	static char	remainder[BUFFER_SIZE + 1];
+	char		*aux;
 	ssize_t		size;
 //1- Comprobar errores de fichero
 	if (read(fd, buff, 0) == -1 || BUFFER_SIZE < 1)
@@ -121,32 +121,33 @@ char	*get_next_line(int fd)
 		return (NULL);
 	buff[size] = '\0';
 //3- Si no hay temp inicializo str
-	if (!remainder)
+	if (!(char *)remainder)
 		str = ft_strdup("");
 	else
-	{
-		str = ft_strdup(remainder);
-		free(remainder);
-	}
+		str = ft_strdup((char *)remainder);
 //4- Bucle de lectura
 	//paso por referencia str, que es la que puede tener un resultado u otro
 	str = read_line(size, fd, buff, &str);
 //5- Si tiene salto de linea guardar el temp lo sobrante
 	// LEAKS
-	/*if (ft_strchr(str, '\n') != NULL)
-		remainder = ft_strdup(ft_strchr(str, '\n') + 1);*/
+	if (ft_strchr(str, '\n') != NULL && str[0] != '\0')
+	{
+		ft_memcpy((char *)remainder, ft_strchr(str, '\n') + 1,
+			sizeof(ft_strchr(str, '\n') + 1));
+		remainder[ft_strlen(remainder)] = '\0';
+	}
 //6- Si existe temp
-	/*if (remainder)
+	if ((char *)remainder)
 	{
 		aux = str;
 		str = assign_chars(aux);
 		free(aux);
 	}
-	else if (!remainder)
+	/*else
 	{
-		aux = ft_strdup(remainder);
-		free(remainder);
-		return (aux);
+		aux = str;
+		str = ft_strdup(remainder);
+		free(aux);
 	}*/
 	return (str);
 }
