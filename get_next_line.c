@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/08 20:32:32 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/09 18:59:47 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,23 @@ static char	*assign_chars(char *aux)
 	
 	i = 0;
 	//da los valores hasta el salto de linea
-	while (aux[i] != '\n' && aux[i])
+	while (aux[i] != '\n' && aux[i] != '\0')
 		i++;
 	str = malloc(sizeof(char) * i + 1);
 	ft_memcpy(str, aux, i + 1);
 	str[i + 1] = '\0';
 	return (str);
+}
+
+static void	clean_chr(void *s, size_t n)
+{
+	unsigned int		i;
+	char				*str;
+
+	i = -1;
+	str = (char *) s;
+	while (++i < n)
+		str[i] = 0;
 }
 
 static char	*read_line(int size, int fd, char *buff, char **str)
@@ -46,17 +57,6 @@ static char	*read_line(int size, int fd, char *buff, char **str)
 		buff[size] = '\0';
 	}
 	return (*str);
-}
-
-static void	ft_bzero(void *s, size_t n)
-{
-	unsigned int		i;
-	char				*str;
-
-	i = -1;
-	str = (char *) s;
-	while (++i < n)
-		str[i] = 0;
 }
 
 /*
@@ -83,32 +83,18 @@ char	*get_next_line(int fd)
 	buff[size] = '\0';
 //3- La estatica ya esta inicializada
 	str = ft_strdup((char *)remainder);
-	ft_bzero(remainder, sizeof(remainder));
+	clean_chr(remainder, sizeof(remainder));
 //4- Bucle de lectura
 	//paso por referencia str, que es la que puede tener un resultado u otro
 	str = read_line(size, fd, buff, &str);
 //5- Si tiene salto de linea guardar el temp lo sobrante
 	// LEAKS
 	if (ft_strchr(str, '\n') != NULL)
-	{
 		ft_memcpy((char *)remainder, ft_strchr(str, '\n') + 1,
-			ft_strlen(ft_strchr(str, '\n') + 1));
-		remainder[ft_strlen(remainder) ] = '\0';
-	}
-//6- Si existe str, se le asignan os caracteres antes del salto de linea
-	if (str)
-	{
-		aux = str;
-		str = assign_chars(aux);
-		free(aux);
-	}
-	///NO ENTRA
-	else
-	{
-		aux = str;
-		str = ft_strdup((char *)remainder);
-		free(aux);
-		ft_bzero(remainder, sizeof(remainder));
-	}
+			ft_strlen(ft_strchr(str, '\n')));
+//6- se le asignan os caracteres antes del salto de linea
+	aux = str;
+	str = assign_chars(aux);
+	free(aux);
 	return (str);
 }
