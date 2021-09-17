@@ -4,22 +4,32 @@ int	main(void)
 {
 	int		fd;
 	char	*archive;
-	fd = open("ficheros/fichero", O_RDONLY);
+	fd = open("ficheros/fichero1", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("(%d)Error al abrir el archivo.\n", fd);
 		return (0);
 	}
+	archive = 0;
 	archive = get_next_line(fd);
-	while (archive)
+	//printf("Archivo: %s", archive);
+	free(archive);
+	archive = get_next_line(fd);
+	//printf("Archivo: %s", archive);
+	free(archive);
+	archive = get_next_line(fd);
+	//printf("Archivo: %s", archive);
+	free(archive);
+	archive = get_next_line(fd);
+	//printf("Archivo: %s", archive);
+	/*while (archive)
 	{
 		//sleep(2);
-		free(archive);
 		printf("Archivo: %s", archive);
+		free(archive);
 		archive = get_next_line(fd);
-	}
-	free(archive);
+	}*/
     close(fd);
-	//system("\nleaks -q gnl.out");
+	system("\nleaks gnl.out");
 	return (0);
 }

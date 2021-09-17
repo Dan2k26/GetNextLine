@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:10:20 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/09 18:05:18 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/16 19:44:34 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define GET_NEXT_LINE_H
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 5
+# define BUFFER_SIZE 42
 #endif
 
 # include <stdio.h>
