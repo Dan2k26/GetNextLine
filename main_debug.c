@@ -12,16 +12,16 @@ int	main(void)
 	}
 	archive = 0;
 	archive = get_next_line(fd);
-	//printf("Archivo: %s", archive);
+	printf("Archivo: %s", archive);
 	free(archive);
 	archive = get_next_line(fd);
-	//printf("Archivo: %s", archive);
+	printf("Archivo: %s", archive);
 	free(archive);
 	archive = get_next_line(fd);
-	//printf("Archivo: %s", archive);
+	printf("Archivo: %s", archive);
 	free(archive);
 	archive = get_next_line(fd);
-	//printf("Archivo: %s", archive);
+	printf("Archivo: %s", archive);
 	/*while (archive)
 	{
 		//sleep(2);
