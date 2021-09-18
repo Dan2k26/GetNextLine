@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/07 16:47:48 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/18 20:42:17 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@ size_t	ft_strlen(const char *c)
 	while (c[i] != '\0')
 		i++;
 	return (i);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	unsigned int		i;
+	char				*str;
+
+	i = -1;
+	str = (char *) s;
+	while (++i < n)
+		str[i] = 0;
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -51,52 +62,32 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (str);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t		num;
-	size_t		i;
-	char		*str;
-	const char	*s;
-
-	i = -1;
-	num = sizeof(dst);
-	str = dst;
-	s = src;
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	while (++i < n)
-		str[i] = s[i];
-	return (str);
-}
-
 char	*ft_strdup(const char *s1)
 {
 	char	*str;
 	int		num;
+	int		i;
 
+	i = -1;
 	num = ft_strlen((char *)s1);
 	str = malloc(num + 1);
 	if (str == NULL)
 		return (NULL);
-	ft_memcpy(str, s1, num * sizeof(char) + 1);
+	if (str == NULL && s1 == NULL)
+		return (NULL);
+	while (++i < (int)(num * sizeof(char) + 1))
+		str[i] = s1[i];
 	str[num] = '\0';
 	return (str);
 }
 
-char	*ft_strchr(const char *s, int c)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*str;
-	int		i;
+	void	*ptr;
 
-	str = (char *)s;
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == (char)c)
-			return (&str[i]);
-		i++;
-	}
-	if (c == '\0')
-		return (&str[i]);
-	return (NULL);
+	ptr = malloc(count * size);
+	if (ptr == NULL)
+		return (NULL);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }

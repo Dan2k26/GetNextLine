@@ -4,7 +4,7 @@ int	main(void)
 {
 	int		fd;
 	char	*archive;
-	fd = open("ficheros/fichero1", O_RDONLY);
+	fd = open("ficheros/hhgttg.txt", O_RDONLY);
 	if (fd == -1)
 	{
 		printf("(%d)Error al abrir el archivo.\n", fd);
@@ -21,6 +21,6 @@ int	main(void)
 	}
 	printf("Archivo: %s\n", archive);
     close(fd);
-	system("\nleaks gnl.out");
+	//system("\nleaks gnl.out");
 	return (0);
 }
