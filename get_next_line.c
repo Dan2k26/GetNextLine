@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/17 21:51:03 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/18 20:01:47 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ char	*get_next_line(int fd)
 	if (!remainder)
 		remainder = calloc(sizeof(char), BUFFER_SIZE);
 	if (size == 0 && remainder[0] == '\0')
+	{
+		free(remainder);
+		remainder = NULL;
 		return (NULL);
+	}
 	buff[size] = '\0';
 	str = ft_strdup((char *)remainder);
 	clean_chr(remainder, sizeof(remainder));
