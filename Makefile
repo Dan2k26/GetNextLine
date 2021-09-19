@@ -10,7 +10,7 @@ OBJS = $(SRC:.c=.o)
 
 OBJSDEBUG = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror # -D BUFFER_SIZE=$(NUM)
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=$(NUM)
 
 all: $(NAME)
 
@@ -26,7 +26,7 @@ run: all
 	./gnl.out ficheros/$(filter-out $@,$(MAKECMDGOALS)) |cat -e
 
 debug: 
-	gcc $(SRCDEBUG) -g3  -o gnl.out 
+	gcc $(CFLAGS) $(SRCDEBUG) -g3  -o gnl.out 
 	@tput setaf 214; echo "DEBUG"
 
 normi:

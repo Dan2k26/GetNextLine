@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/19 14:15:49 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/19 22:57:20 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ size_t	ft_strlen(const char *c)
 	size_t	i;
 
 	i = 0;
-	while (c[i] != '\0')
-		i++;
+	if (c)
+	{
+		while (c[i] != '\0')
+			i++;	
+	}
 	return (i);
 }
 

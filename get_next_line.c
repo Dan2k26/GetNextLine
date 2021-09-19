@@ -6,11 +6,12 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:09:52 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/19 14:23:09 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/19 23:21:28 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include<stdio.h>
 
 static char	*assign_chars(char *aux)
 {
@@ -25,9 +26,11 @@ static char	*assign_chars(char *aux)
 	str = malloc(sizeof(char) * i + 1);
 	if (str == NULL && aux == NULL)
 		return (NULL);
-	i = i + 1;
+	ft_bzero(str, i + 1);
 	while (++y < i)
 		str[y] = aux[y];
+	if (aux[i] == '\n')
+		str[i] = '\n';
 	str[i] = '\0';
 	return (str);
 }
@@ -76,9 +79,10 @@ static int	checking(char **remainder, ssize_t size, char **buff)
 {
 	if (!*remainder)
 	{
-		*remainder = malloc(sizeof(char) * BUFFER_SIZE);
+		*remainder = malloc(sizeof(char) * BUFFER_SIZE + 1);
 		if (*remainder == NULL)
 			return (0);
+		ft_bzero(*remainder, BUFFER_SIZE + 1);
 	}
 	if (size == -1 || (size == 0 && *remainder[0] == '\0'))
 	{
@@ -97,9 +101,10 @@ char	*get_next_line(int fd)
 	static char	*remainder;
 	ssize_t		size;
 
-	buff = malloc(sizeof(char) * BUFFER_SIZE);
+	buff = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (buff == NULL)
 		return (NULL);
+	ft_bzero(buff, BUFFER_SIZE + 1);
 	if (read(fd, buff, 0) == -1 || BUFFER_SIZE < 1 || fd < 0 )
 	{
 		free(buff);
@@ -111,7 +116,7 @@ char	*get_next_line(int fd)
 	str = ft_strdup((char *)remainder);
 	if (str == NULL)
 		return (NULL);
-	ft_bzero(remainder, sizeof(remainder));
+	ft_bzero(remainder, ft_strlen(remainder));
 	str = read_line(size, fd, buff, &str);
 	return (check_next_line(&str, &remainder));
 }
