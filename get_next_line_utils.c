@@ -6,34 +6,35 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/19 22:57:20 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/19 23:42:35 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *c)
+size_t	ft_cleanlen(const char *c, int num, void *s, size_t n)
 {
-	size_t	i;
+	size_t			i;
+	unsigned int	y;
+	char			*str;
 
 	i = 0;
-	if (c)
+	y = -1;
+	if (num == 0)
 	{
-		while (c[i] != '\0')
-			i++;	
+		if (c)
+		{
+			while (c[i] != '\0')
+				i++;
+		}
+	}
+	else
+	{
+		str = (char *) s;
+		while (++y < n)
+			str[y] = 0;
 	}
 	return (i);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned int		i;
-	char				*str;
-
-	i = -1;
-	str = (char *) s;
-	while (++i < n)
-		str[i] = 0;
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
@@ -45,7 +46,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	i = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	size = ft_strlen(s1) + ft_strlen(s2);
+	size = ft_cleanlen(s1, 0, 0, 0) + ft_cleanlen(s2, 0, 0, 0);
 	str = (char *)malloc(size + 1 * sizeof(char));
 	if (str == NULL)
 		return (NULL);
@@ -72,7 +73,7 @@ char	*ft_strdup(const char *s1)
 	int		i;
 
 	i = -1;
-	num = ft_strlen((char *)s1);
+	num = ft_cleanlen((char *)s1, 0, 0, 0);
 	str = malloc(num + 1);
 	if (str == NULL)
 		return (NULL);
@@ -100,4 +101,29 @@ char	*ft_strchr(const char *s, int c)
 	if (c == '\0')
 		return (&str[i]);
 	return (NULL);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	unsigned int	i;
+	char			*str;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	if (ft_cleanlen(s + start, 0, 0, 0) < len)
+		len = ft_cleanlen(s + start, 0, 0, 0);
+	str = malloc((len + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	ft_cleanlen("\0", 1, str, len + 1);
+	if (start >= (unsigned int)ft_cleanlen(s, 0, 0, 0))
+		return (str);
+	while (i < len && s[i])
+	{
+		str[i] = s[start + i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
 }

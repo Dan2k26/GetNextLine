@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/26 14:10:20 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/19 15:28:33 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/19 23:39:26 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@
 char	*get_next_line(int fd);
 
 char	*ft_strjoin(char const *s1, char const *s2);
-size_t	ft_strlen(const char *c);
+size_t	ft_cleanlen(const char *c, int num, void *s, size_t n);
 char	*ft_strdup(const char *s1);
 void	ft_bzero(void *s, size_t n);
 char	*ft_strchr(const char *s, int c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
