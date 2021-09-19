@@ -6,7 +6,7 @@
 /*   By: dlerma-c <dlerma-c@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/31 20:51:37 by dlerma-c          #+#    #+#             */
-/*   Updated: 2021/09/18 20:42:17 by dlerma-c         ###   ########.fr       */
+/*   Updated: 2021/09/19 14:15:49 by dlerma-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,20 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strchr(const char *s, int c)
 {
-	void	*ptr;
+	char	*str;
+	int		i;
 
-	ptr = malloc(count * size);
-	if (ptr == NULL)
-		return (NULL);
-	ft_bzero(ptr, count * size);
-	return (ptr);
+	str = (char *)s;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return (&str[i]);
+		i++;
+	}
+	if (c == '\0')
+		return (&str[i]);
+	return (NULL);
 }
